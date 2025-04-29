@@ -1,16 +1,35 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-export default function Sidebar() {
+const Sidebar = () => {
+  const location = useLocation();
+
+  const links = [
+    { name: 'Inicio', path: '/', icon: '🏠' },
+    { name: 'Playlist', path: '/playlist', icon: '🎵' },
+    { name: 'Favoritos', path: '/favoritos', icon: '❤️' },
+    { name: 'Albums', path: '/albums', icon: '💽' },
+    { name: 'Perfil', path: '/perfil', icon: '👤' },
+  ];
+
   return (
-    <aside className="w-60 bg-gray-800 p-4 space-y-4">
-      <h2 className="text-2xl font-bold mb-4">🎵 MyMusicApp</h2>
-      <nav className="space-y-2">
-        <Link to="/" className="block hover:text-pink-400">Inicio</Link>
-        <Link to="/playlist" className="block hover:text-pink-400">Playlist</Link>
-        <Link to="/favoritos" className="block hover:text-pink-400">Favoritos</Link>
-        <Link to="/albums" className="block hover:text-pink-400">Álbumes</Link>
-        <Link to="/perfil" className="block hover:text-pink-400">Perfil</Link>
+    <aside className="w-60 bg-gray-800 p-6 flex flex-col space-y-6">
+      <h1 className="text-2xl font-bold text-white mb-8">🎶 MelodyX</h1>
+
+      <nav className="flex flex-col gap-4">
+        {links.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            className={`flex items-center gap-3 p-2 rounded-lg transition 
+              ${location.pathname === link.path ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-gray-700 hover:text-white'}`}
+          >
+            <span className="text-xl">{link.icon}</span>
+            <span className="text-md font-medium">{link.name}</span>
+          </Link>
+        ))}
       </nav>
     </aside>
   );
-}
+};
+
+export default Sidebar;
